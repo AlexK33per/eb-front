@@ -1,9 +1,10 @@
 import {Col, Container, Row} from "react-bootstrap";
 import {Link} from "react-router-dom";
+import Moment from 'moment';
 
-export default function EventRow(props) {
+export default function EventList(props) {
     return (
-        <Link to={"/event/" + props.event._id} style={{textDecoration: 'none', color: 'black'}}>
+        <Link to={"/event/" + props.event._id} style={{textDecoration: 'none', color: 'black'}} event={this.props.event}>
             <div style={{
                 marginLeft: '70px',
                 marginRight: '70px',
@@ -16,10 +17,12 @@ export default function EventRow(props) {
                 <p>
                     {props.event.description}
                 </p>
-                <Container>
-                    <Row>
-                        <Col md={6}>
-                            <h3>{props.event.start_date}</h3>
+                <Container fluid={true}>
+                    <Row style={{
+                        textAlign: 'center'
+                    }}>
+                        <Col md={12}>
+                            <h3>{Moment(props.event.start_date).format('MMM Do YYYY')}</h3>
                             <p><i>Save the date</i></p>
                         </Col>
                     </Row>
