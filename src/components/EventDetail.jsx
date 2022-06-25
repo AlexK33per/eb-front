@@ -1,8 +1,10 @@
 import {Component, useState} from "react";
-import {Row} from "react-bootstrap";
+import {Col, Row} from "react-bootstrap";
 import bgImage from "./Header/san_francisco_adobe.jpeg";
-import logo from "./Header/logo-wordmark-orange-cut.png";
 import axios from "axios";
+import Moment from "moment";
+import Ticket from "./Ticket";
+import * as ticket from "react-bootstrap/ElementChildren";
 
 export default class EventDetail extends Component {
     constructor(props) {
@@ -25,6 +27,9 @@ export default class EventDetail extends Component {
     }
 
     render() {
+        const start_date = this.state.event != null ? this.state.event.start_date : "";
+        const end_date = this.state.event != null ? this.state.event.end_date : "";
+        const ticketList = this.state.event != null ? this.state.event.tickets : [];
          return (
              <div style={{ textAlign: 'center' }}>
                  <Row style={{
@@ -52,13 +57,41 @@ export default class EventDetail extends Component {
                      Description
                  </h1>
                  <h3 style={{
-                     marginTop: "0px",
-                     fontWeight: 'bold',
+                     marginTop: "0px"
                  }}>
                      {
                          this.state.event != null ? this.state.event.description : ""
                      }
                  </h3>
+                 <Row>
+                     <Col md={3}></Col>
+                     <Col md={3}>
+                         <h3 style={{
+                             fontWeight: 'bold'
+                         }}>Start Date</h3>
+                     </Col>
+                     <Col md={3}>
+                         <h3 style={{
+                             fontWeight: 'bold'
+                         }}>End Date</h3>
+                     </Col>
+                     <Col md={3}></Col>
+                 </Row>
+                 <Row>
+                     <Col md={3}></Col>
+                     <Col md={3}>
+                         <h3>{Moment(start_date).format('MMM Do YYYY')}</h3>
+                     </Col>
+                     <Col md={3}>
+                         <h3>{Moment(end_date).format('MMM Do YYYY')}</h3>
+                     </Col>
+                     <Col md={3}></Col>
+                 </Row>
+                 {
+                     ticketList.map((ticket) => {
+                         return <Ticket key={ticket.name} ticket={ticket}/>
+                     })
+                 }
              </div>
          )
      }
